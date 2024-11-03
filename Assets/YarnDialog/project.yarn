@@ -23,17 +23,15 @@ position: -155,47
 部屋から出る前にあなたの目に「交通カード」、「お酒」、「かぎ」がはいり、この中で一つを持っていこうと思う。
 何を選びますか?
 
-->交通カード（50％で成功）
-   <<set $selection1_1 = $selection1_1 + 1>>
-      <<jump DecisionNode_1>>
-
-->お酒（50％で成功）
-   <<set $selection1_2 = $selection1_2 + 1>>
-      <<jump DecisionNode_1>>
-
-->かぎ（50％で成功）
-   <<set $selection1_3 = $selection1_3 + 1>>
-      <<jump DecisionNode_1>>
+   -> 交通カード(50%)
+      <<set $selection1_1 = $selection1_1 + 1>>
+         <<jump DecisionNode_1>>
+   -> お酒(50%)
+      <<set $selection1_2 = $selection1_2 + 1>>
+         <<jump DecisionNode_1>>
+   -> カギ(50%)
+      <<set $selection1_3 = $selection1_3 + 1>>
+         <<jump DecisionNode_1>>
 
 
 ===
@@ -69,7 +67,7 @@ position: 197,46
       あなたは「かぎ」を手に入れました。
       <<jump Outside_1>>
    <<elseif random_range(1,10) <= 5 >>
-      あなたの手から「かぎ」がすべってしまいなくなった。
+      あなたの手から「カギ」がすべってしまいなくなった。
    <<jump Outside_1>>
    <<endif>>
 <<endif>>

@@ -1,4 +1,4 @@
-{
+﻿{
   "projectFileVersion": 2,
   "sourceFiles": [
     "**/*.yarn"
@@ -7,6 +7,6 @@
     "**/*~/*"
   ],
   "localisation": {},
-  "baseLanguage": "ja",
+  "baseLanguage": "ko",
   "compilerOptions": {}
 }

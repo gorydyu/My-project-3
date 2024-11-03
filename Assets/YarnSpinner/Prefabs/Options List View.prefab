@@ -158,6 +158,8 @@ MonoBehaviour:
   showUnavailableOptions: 0
   lastLineText: {fileID: 6323935188436132823}
   lastLineContainer: {fileID: 6323935188436132821}
+  lastLineCharacterNameText: {fileID: 0}
+  lastLineCharacterNameContainer: {fileID: 0}
 --- !u!114 &6323935187928403897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,10 +278,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Last line
+  m_text: 'Last
+
+'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bb779d5c1f115e44c82aa6f81b029f3f, type: 2}
+  m_sharedMaterial: {fileID: -3649477919199228876, guid: bb779d5c1f115e44c82aa6f81b029f3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
