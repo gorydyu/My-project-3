@@ -1,0 +1,85 @@
+title: Start
+position: -155,47
+---
+<<declare $selection1_1 = 0>>
+<<declare $selection1_2 = 0>>
+<<declare $selection1_3 = 0>>
+<<declare $beerBottle = 0 >>
+<<declare $roomKey = 0 >>
+<<declare $busCard = 0 >>
+
+
+///scene 1 black screen with ringing word
+あなたはうるさいアラムの音で起きてしまい、ひどい頭痛をかんじる。
+///scene 2 Showing the room
+あなたはこの部屋に見覚えがないことに気がづく。
+部屋だけではなく自分について何も思い出せないことにも気が付いてしまう。
+そう！あなたは記憶喪失になってしまった。
+///scene 3 hand with memo
+あなたの目に机のうえにあるメモが入り、メモをひろい、読んでみた。
+メモには「18時まで第6小学校へ」と書かれていた。
+自分のことについてなんの手掛かりがないあなたはメモに書かれている目的地を目標として出る準備をする。
+///scene 4 There is a card, beer bottle, key lying
+部屋から出る前にあなたの目に「交通カード」、「お酒」、「かぎ」がはいり、この中で一つを持っていこうと思う。
+何を選びますか?
+
+->交通カード（50％で成功）
+   <<set $selection1_1 = $selection1_1 + 1>>
+      <<jump DecisionNode_1>>
+
+->お酒（50％で成功）
+   <<set $selection1_2 = $selection1_2 + 1>>
+      <<jump DecisionNode_1>>
+
+->かぎ（50％で成功）
+   <<set $selection1_3 = $selection1_3 + 1>>
+      <<jump DecisionNode_1>>
+
+
+===
+
+
+
+title: DecisionNode_1
+
+position: 197,46
+---
+
+<<if $selection1_1 > $selection1_2 && $selection1_1 > $selection1_3>>
+   <<if random_range(1,10) > 5 >>
+      <<set $busCard = $busCard + 1 >>
+      あなたは「交通カード」を手に入れました。
+      <<jump Outside_1>>
+   <<elseif random_range(1,10) <= 5 >>
+      あなたの手から「交通カード」がすべってしまいなくなった。
+      <<jump Outside_1>>
+      <<endif>>
+
+<<elseif $selection1_2 > $selection1_1 && $selection1_2 > $selection1_3>>
+   <<if random_range(1,10) > 5 >>
+      あなたは「お酒」を手に入れた。
+      <<jump Outside_1>>
+   <<elseif random_range(1,10) <= 5 >>
+      あなたの手から「お酒」がすべってしまい割れてしまった。
+      <<jump Outside_1>>
+      <<endif>>
+
+<<elseif $selection1_3 > $selection1_1 && $selection1_3 > $selection1_2>>
+   <<if random_range(1,10) > 5 >>
+      あなたは「かぎ」を手に入れました。
+      <<jump Outside_1>>
+   <<elseif random_range(1,10) <= 5 >>
+      あなたの手から「かぎ」がすべってしまいなくなった。
+   <<jump Outside_1>>
+   <<endif>>
+<<endif>>
+
+===
+
+
+title: Outside_1
+
+---
+
+===
+
