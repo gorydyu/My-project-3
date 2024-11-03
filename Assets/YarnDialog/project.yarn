@@ -1,7 +1,8 @@
 title: Start
-position: -155,47
+tags: 
+position: -155,45.680490493774414
 ---
-<<declare $selection1_1 = 0>>
+<<declare $selection1_1 = 1>>
 <<declare $selection1_2 = 0>>
 <<declare $selection1_3 = 0>>
 <<declare $beerBottle = 0 >>
@@ -32,17 +33,14 @@ position: -155,47
    -> カギ(50%)
       <<set $selection1_3 = $selection1_3 + 1>>
          <<jump DecisionNode_1>>
-
-
 ===
 
 
 
 title: DecisionNode_1
-
-position: 197,46
+tags: 
+position: 195.48428344726562,44.484283447265625
 ---
-
 <<if $selection1_1 > $selection1_2 && $selection1_1 > $selection1_3>>
    <<if random_range(1,10) > 5 >>
       <<set $busCard = $busCard + 1 >>
@@ -70,13 +68,16 @@ position: 197,46
       あなたの手から「カギ」がすべってしまいなくなった。
    <<jump Outside_1>>
    <<endif>>
+<<else >>
+   あなたはものをてに入れることを失敗した
+   <<jump Outside_1>>
 <<endif>>
-
 ===
 
 
 title: Outside_1
-
+tags: 
+position: 472.9035224914551,50.01864051818848
 ---
 
 ===
