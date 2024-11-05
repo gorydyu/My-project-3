@@ -5,6 +5,7 @@ using Yarn.Unity;
 
 public class ChangoTest : MonoBehaviour
 {
+
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 

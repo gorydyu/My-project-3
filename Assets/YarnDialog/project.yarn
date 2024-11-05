@@ -2,7 +2,7 @@ title: Start
 tags: 
 position: -155,45.680490493774414
 ---
-<<declare $selection1_1 = 1>>
+<<declare $selection1_1 = 0>>
 <<declare $selection1_2 = 0>>
 <<declare $selection1_3 = 0>>
 <<declare $beerBottle = 0 >>
@@ -26,9 +26,11 @@ position: -155,45.680490493774414
 ///scene 4 There is a card, beer bottle, key lying
 部屋から出る前にあなたの目に「交通カード」、「お酒」、「かぎ」がはいり、この中で一つを持っていこうと思う。
 何を選びますか?
+<<declare $voteSceneNum_1 = 3>>
 
    -> 交通カード(50%)
       <<set $selection1_1 = $selection1_1 + 1>>
+         //<<SaveVote1_1 YarnCommands {$selection1_1} >>
          <<jump DecisionNode_1>>
    -> お酒(50%)
       <<set $selection1_2 = $selection1_2 + 1>>
@@ -36,6 +38,7 @@ position: -155,45.680490493774414
    -> カギ(50%)
       <<set $selection1_3 = $selection1_3 + 1>>
          <<jump DecisionNode_1>>
+
 ===
 
 
@@ -44,6 +47,8 @@ title: DecisionNode_1
 tags: 
 position: 195.48428344726562,44.484283447265625
 ---
+
+
 <<if $selection1_1 > $selection1_2 && $selection1_1 > $selection1_3>>
    <<if random_range(1,10) > 5 >>
       <<set $busCard = $busCard + 1 >>
@@ -82,6 +87,7 @@ title: Outside_1
 tags: 
 position: 472.9035224914551,50.01864051818848
 ---
+
 
 ===
 
