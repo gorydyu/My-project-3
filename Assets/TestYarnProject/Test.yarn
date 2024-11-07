@@ -1,0 +1,113 @@
+﻿title: Start
+tags:
+position: -156,-86
+---
+<<declare $selection0 = "">>
+<<declare $selection1 = "">>
+<<declare $selection2 = "">>
+<<declare $voteID = "">>
+
+<<declare $selectCount0 = 0>>
+<<declare $selectCount1 = 0>>
+<<declare $selectCount2 = 0>>
+
+<<declare $largestSelect = 0>>
+<<declare $largestSelectProbability = 0>>
+
+<<declare $isSuccess = false>>
+
+<<declare $beerBottle = 0 >>
+<<declare $roomKey = 0 >>
+<<declare $busCard = 0 >>
+
+///scene 1 black screen with ringing word
+あなたはうるさいアラムの音で起きてしまい、ひどい頭痛をかんじる。
+
+///scene 2 Showing the room
+あなたはこの部屋に見覚えがないことに気がづく。
+部屋だけではなく自分について何も思い出せないことにも気が付いてしまう。
+そう！あなたは記憶喪失になってしまった。
+
+///scene 3 hand with memo
+あなたの目に机のうえにあるメモが入り、メモをひろい、読んでみた。
+メモには「18時まで第6小学校へ」と書かれていた。
+自分のことについてなんの手掛かりがないあなたはメモに書かれている目的地を目標として出る準備をする。
+
+///scene 4 There is a card, beer bottle, key lying
+部屋から出る前にあなたの目に「交通カード」、「お酒」、「かぎ」がはいり、この中で一つを持っていこうと思う。
+何を選びますか?
+
+// 가지고 오고 싶은 투표의 이름을 voteId에 초기화
+<<set $voteID = "Vote_1">>
+<<jump SelectionNode>>
+===
+
+title: SelectionNode
+position: 88,-244
+---
+// 투표의 이름을 통해 투표 내 선택지들의 이름들을 불러옴
+<<GetVoteSelections VoteSelectionSaver {$voteID}>>
+
+-> {$selection0}
+    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {0}>>
+-> {$selection1}
+    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {1}>>
+-> {$selection2}
+    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {2}>>
+
+<<jump ProbabilityNode>>
+===
+
+title: ProbabilityNode
+position: 333,-253
+---
+// 투표 횟수가 가장 많은 선택지와 선택지의 확률을 불러옴
+<<GetLargestSelect VoteSelectionSaver {$voteID}>>
+<<GetSelectProbability VoteSelectionSaver {$voteID} {$largestSelect}>>
+
+<<if random_range(1,100) <= $largestSelectProbability>>
+    <<set $isSuccess = true>>
+<<else>>
+    <<set $isSuccess = false>>
+<<endif>>
+
+<<jump DecisionNode>>
+===
+
+title: DecisionNode
+position: 195,44
+---
+<<if $largestSelect == 0>>
+    <<if $isSuccess>>
+        <<set $busCard = $busCard + 1 >>
+        あなたは「交通カード」を手に入れました。
+    <<else>>
+        あなたの手から「交通カード」がすべってしまいなくなった。
+    <<endif>>
+
+<<elseif $largestSelect == 1>>
+    <<if $isSuccess>>
+        あなたは「お酒」を手に入れた。
+    <<else>>
+        あなたの手から「お酒」がすべってしまい割れてしまった。
+    <<endif>>
+
+<<elseif $largestSelect == 2>>
+    <<if $isSuccess>>
+        あなたは「かぎ」を手に入れました。
+    <<else>>
+        あなたの手から「カギ」がすべってしまいなくなった。
+   <<endif>>
+
+<<else>>
+   あなたはものをてに入れることを失敗した
+
+<<endif>>
+<<jump Outside_1>>
+===
+
+title: Outside_1
+position: 472,50
+---
+Wow!
+===

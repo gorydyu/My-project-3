@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6ceea3e05d77549929c4a858908990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  storage: {fileID: 2089014208}
 --- !u!1 &528733170
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +438,7 @@ PrefabInstance:
     - target: {fileID: 3579681405068720530, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: yarnProject
       value: 
-      objectReference: {fileID: 7545569452688597077, guid: 6d0a299fdca60754aa0bcd67dce89eb5, type: 3}
+      objectReference: {fileID: 7545569452688597077, guid: 6e0e0e6f54740834084353052bd5f53c, type: 3}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -747,6 +748,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voteSceneID: 0
+--- !u!114 &2089014208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3831113771892455813, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
+  m_PrefabInstance: {fileID: 1129990534}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610c541718d694070a21327d1ae62e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3451018866443957490
 PrefabInstance:
   m_ObjectHideFlags: 0
