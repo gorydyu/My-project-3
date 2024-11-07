@@ -12,10 +12,7 @@ namespace FutureCartographer.U3DJapaneseFont.Demo
 	{
         public float RotateY = 10.0f;
 
-		// camera rotation
-		void Update()
-		{
-			this.transform.Rotate(0.0f, RotateY * Time.deltaTime, 0.0f);
-		}
-	}
+        // camera rotation
+        void Update() => this.transform.Rotate(0.0f, RotateY * Time.deltaTime, 0.0f);
+    }
 }

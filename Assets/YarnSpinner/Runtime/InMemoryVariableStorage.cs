@@ -209,30 +209,21 @@ namespace Yarn.Unity
         /// <summary>
         /// returns a boolean value representing if the particular variable is inside the variable storage
         /// </summary>
-        public override bool Contains(string variableName)
-        {
-            return variables.ContainsKey(variableName);
-        }
+        public override bool Contains(string variableName) => variables.ContainsKey(variableName);
 
         /// <summary>
         /// Returns an <see cref="IEnumerator{T}"/> that iterates over all
         /// variables in this object.
         /// </summary>
         /// <returns>An iterator over the variables.</returns>
-        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
-        {
-            return ((IEnumerable<KeyValuePair<string, object>>)variables).GetEnumerator();
-        }
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => ((IEnumerable<KeyValuePair<string, object>>)variables).GetEnumerator();
 
         /// <summary>
         /// Returns an <see cref="IEnumerator"/> that iterates over all
         /// variables in this object.
         /// </summary>
         /// <returns>An iterator over the variables.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<KeyValuePair<string, object>>)variables).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<KeyValuePair<string, object>>)variables).GetEnumerator();
 
         #region Save/Load
         public override (Dictionary<string,float>,Dictionary<string,string>,Dictionary<string,bool>) GetAllVariables()

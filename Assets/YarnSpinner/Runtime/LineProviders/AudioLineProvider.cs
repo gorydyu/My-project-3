@@ -314,14 +314,8 @@ namespace Yarn.Unity
 
         public override bool LinesAvailable => provider.LinesAvailable;
 
-        public override LocalizedLine GetLocalizedLine(Line line)
-        {
-            return provider.GetLocalizedLine(line);
-        }
+        public override LocalizedLine GetLocalizedLine(Line line) => provider.GetLocalizedLine(line);
 
-        public override void PrepareForLines(IEnumerable<string> lineIDs)
-        {
-            provider.PrepareForLines(lineIDs);
-        }
+        public override void PrepareForLines(IEnumerable<string> lineIDs) => provider.PrepareForLines(lineIDs);
     }
 }

@@ -520,11 +520,8 @@ namespace Yarn.Unity.Editor
             }
         }
 
-        public override bool HasModified()
-        {
-            return base.HasModified() || AnyModifications;
-        }
-        
+        public override bool HasModified() => base.HasModified() || AnyModifications;
+
         private VisualElement CreateUpgradeUI(YarnProjectImporter importer)
         {
             var ui = new VisualElement();

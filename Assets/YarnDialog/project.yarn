@@ -26,7 +26,12 @@ position: -155,45.680490493774414
 ///scene 4 There is a card, beer bottle, key lying
 部屋から出る前にあなたの目に「交通カード」、「お酒」、「かぎ」がはいり、この中で一つを持っていこうと思う。
 何を選びますか?
+<<<<<<< Updated upstream
 
+=======
+<<declare $voteOption1 = 3>>
+<<readVoteOption Scene_1option {$voteOption1}>>
+>>>>>>> Stashed changes
    -> 交通カード(50%)
       <<set $selection1_1 = $selection1_1 + 1>>
          <<jump DecisionNode_1>>

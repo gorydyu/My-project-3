@@ -240,8 +240,7 @@ namespace Yarn.Unity
                 return cachedProgram;
             }
         }
-        private void Awake() 
-        {
+        private void Awake() =>
             // We have to invalidate the cache on Awake.
             // Note that this cannot be done through the importer 
             // (e.g., with a setter method that sets compiledYarnProgram and invalidates cachedProgram)
@@ -250,7 +249,6 @@ namespace Yarn.Unity
             // If there are other sources that can change the value of compiledYarnProgram aside from
             // the importer in runtime, maybe we can add such a method, but until then, this is sufficient.
             cachedProgram = null;
-        }
     }
 
     public enum LocalizationType {

@@ -122,9 +122,6 @@ namespace Yarn.Unity.Editor
             foldout.text = $"{culture.DisplayName} ({culture.Name})";
         }
 
-        internal void ClearModified()
-        {
-            IsModified = false;
-        }
+        internal void ClearModified() => IsModified = false;
     }
 }

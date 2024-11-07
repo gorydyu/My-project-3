@@ -288,10 +288,7 @@ namespace Yarn.Unity.ActionAnalyser
             return true;
         }
 
-        private bool ValidateCommand(out Diagnostic failureReason)
-        {
-            throw new NotImplementedException();
-        }
+        private bool ValidateCommand(out Diagnostic failureReason) => throw new NotImplementedException();
 
         public SyntaxNode GetRegistrationSyntax(string dialogueRunnerVariableName = "dialogueRunner")
         {

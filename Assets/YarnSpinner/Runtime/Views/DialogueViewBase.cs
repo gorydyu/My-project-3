@@ -139,12 +139,10 @@ namespace Yarn.Unity
         /// <seealso cref="InterruptLine(LocalizedLine, Action)"/>
         /// <seealso cref="DismissLine(Action)"/>
         /// <seealso cref="RunOptions(DialogueOption[], Action{int})"/>
-        public virtual void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
-        {
+        public virtual void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished) =>
             // The default implementation does nothing, and immediately calls
             // onDialogueLineFinished.
             onDialogueLineFinished?.Invoke();
-        }
 
         /// <summary>
         /// Called by the <see cref="DialogueRunner"/> to signal that a line has
@@ -194,11 +192,9 @@ namespace Yarn.Unity
         /// called after the line has finished being presented.</param>
         /// <seealso cref="RunLine(LocalizedLine, Action)"/>
         /// <seealso cref="DismissLine(Action)"/>
-        public virtual void InterruptLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
-        {
+        public virtual void InterruptLine(LocalizedLine dialogueLine, Action onDialogueLineFinished) =>
             // the default implementation does nothing
             onDialogueLineFinished?.Invoke();
-        }
 
         /// <summary>
         /// Called by the <see cref="DialogueRunner"/> to signal that the view
@@ -237,12 +233,10 @@ namespace Yarn.Unity
         /// </remarks>
         /// <param name="onDismissalComplete">The method that should be called
         /// when the view has finished dismissing the line.</param>
-        public virtual void DismissLine(Action onDismissalComplete)
-        {
+        public virtual void DismissLine(Action onDismissalComplete) =>
             // The default implementation does nothing, and immediately calls
             // onDialogueLineFinished.
             onDismissalComplete?.Invoke();
-        }
 
         /// <summary>
         /// Called by the <see cref="DialogueRunner"/> to signal that a set of

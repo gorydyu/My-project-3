@@ -380,10 +380,8 @@ namespace Yarn.Unity
             DialogueRunner = dialogueRunner;
         }
 
-        private static string GetFullMethodName(MethodInfo method) {
-            return $"{method.DeclaringType.FullName}.{method.Name}";
-        }
- 
+        private static string GetFullMethodName(MethodInfo method) => $"{method.DeclaringType.FullName}.{method.Name}";
+
         public void RegisterActions() {
             foreach (var registrationFunction in ActionRegistrationMethods) {
                 registrationFunction.Invoke(DialogueRunner);
@@ -608,10 +606,7 @@ namespace Yarn.Unity
         internal static HashSet<System.Action<IActionRegistration>> ActionRegistrationMethods = new HashSet<Action<IActionRegistration>>();
 
 
-        public static void AddRegistrationMethod(Action<IActionRegistration> registerActions)
-        {
-            ActionRegistrationMethods.Add(registerActions);
-        }
+        public static void AddRegistrationMethod(Action<IActionRegistration> registerActions) => ActionRegistrationMethods.Add(registerActions);
 
         public static Yarn.Library GetLibrary()
         {
@@ -627,52 +622,19 @@ namespace Yarn.Unity
             return library;
         }
 
-        public void AddCommandHandler(string commandName, Func<IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
+        public void AddCommandHandler(string commandName, Func<IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
 
         // GYB4 START
-        public void AddCommandHandler<T1>(string commandName, Func<T1, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2>(string commandName, Func<T1, T2, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3>(string commandName, Func<T1, T2, T3, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4>(string commandName, Func<T1, T2, T3, T4, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5>(string commandName, Func<T1, T2, T3, T4, T5, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5, T6>(string commandName, Func<T1, T2, T3, T4, T5, T6, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
-        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, IEnumerator> handler)
-        {
-            this.AddCommandHandler(commandName, (Delegate)handler);
-        }
+        public void AddCommandHandler<T1>(string commandName, Func<T1, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2>(string commandName, Func<T1, T2, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3>(string commandName, Func<T1, T2, T3, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4>(string commandName, Func<T1, T2, T3, T4, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5>(string commandName, Func<T1, T2, T3, T4, T5, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5, T6>(string commandName, Func<T1, T2, T3, T4, T5, T6, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
+        public void AddCommandHandler<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string commandName, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, IEnumerator> handler) => this.AddCommandHandler(commandName, (Delegate)handler);
         // GYB4 END
 
         /// <summary>

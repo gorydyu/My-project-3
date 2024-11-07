@@ -45,10 +45,7 @@ namespace Yarn.Unity
 
         // Shows the window.
         [MenuItem("Window/Yarn Spinner/About Yarn Spinner... %#y", false, 2000)]
-        static void ShowWindow()
-        {
-            EditorWindow.GetWindow<YarnSpinnerEditorWindow>();
-        }
+        static void ShowWindow() => EditorWindow.GetWindow<YarnSpinnerEditorWindow>();
 
         // Called when the window first appears.
         void OnEnable()
@@ -89,11 +86,9 @@ namespace Yarn.Unity
             return version;
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() =>
             // Tidy up our update-list delegate when we're going away
             EditorApplication.projectChanged -= RefreshYarnProjectList;
-        }
 
         private static void EditorUpdate()
         {

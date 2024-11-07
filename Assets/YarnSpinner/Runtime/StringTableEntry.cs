@@ -230,15 +230,10 @@ namespace Yarn.Unity
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"StringTableEntry: lang={Language} id={ID} text=\"{Text}\" file={File} node={Node} line={LineNumber} lock={Lock} comment={Comment}";
-        }
+        public override string ToString() => $"StringTableEntry: lang={Language} id={ID} text=\"{Text}\" file={File} node={Node} line={LineNumber} lock={Lock} comment={Comment}";
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            return obj is StringTableEntry entry &&
+        public override bool Equals(object obj) => obj is StringTableEntry entry &&
                    Language == entry.Language &&
                    ID == entry.ID &&
                    Text == entry.Text &&
@@ -247,13 +242,9 @@ namespace Yarn.Unity
                    LineNumber == entry.LineNumber &&
                    Lock == entry.Lock &&
                    Comment == entry.Comment;
-        }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return
-                Language.GetHashCode() ^
+        public override int GetHashCode() => Language.GetHashCode() ^
                 ID.GetHashCode() ^
                 Text.GetHashCode() ^
                 File.GetHashCode() ^
@@ -261,7 +252,6 @@ namespace Yarn.Unity
                 LineNumber.GetHashCode() ^
                 Lock.GetHashCode() ^
                 Comment.GetHashCode();
-        }
     }
 }
 

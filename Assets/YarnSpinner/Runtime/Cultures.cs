@@ -74,10 +74,7 @@ namespace Yarn.Unity
         /// </summary>
         /// <param name="name"></param>
         /// <returns><see langword="true"/> if name is a valid <see cref="Culture"/> name; <see langword="false"/> otherwise.</returns>
-        public static bool HasCulture(string name)
-        {
-            return _allCulturesTable.Value.ContainsKey(name);
-        }
+        public static bool HasCulture(string name) => _allCulturesTable.Value.ContainsKey(name);
 
         public static Culture CurrentNeutralCulture
         {

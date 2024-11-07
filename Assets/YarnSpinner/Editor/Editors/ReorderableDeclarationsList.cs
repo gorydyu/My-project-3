@@ -115,10 +115,7 @@ namespace Yarn.Unity.Editor
             return IsSearching == false && !isFromScript;
         }
 
-        private bool OnCanAdd(ReorderableList list)
-        {
-            return IsSearching == false;
-        }
+        private bool OnCanAdd(ReorderableList list) => IsSearching == false;
 
         private bool ShouldShowElement(int index)
         {
@@ -159,10 +156,7 @@ namespace Yarn.Unity.Editor
             }
         }
 
-        private void DrawListHeader(Rect rect, string label)
-        {
-            GUI.Label(rect, label);
-        }
+        private void DrawListHeader(Rect rect, string label) => GUI.Label(rect, label);
 
         private void DrawListElement(Rect rect, int index, bool isActive, bool isFocused, bool useSearch)
         {

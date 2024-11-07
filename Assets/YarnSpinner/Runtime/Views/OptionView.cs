@@ -62,10 +62,7 @@ namespace Yarn.Unity
 
         // If we receive a submit or click event, invoke our "we just selected
         // this option" handler.
-        public void OnSubmit(BaseEventData eventData)
-        {
-            InvokeOptionSelected();
-        }
+        public void OnSubmit(BaseEventData eventData) => InvokeOptionSelected();
 
         public void InvokeOptionSelected()
         {
@@ -86,16 +83,10 @@ namespace Yarn.Unity
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            InvokeOptionSelected();
-        }
+        public void OnPointerClick(PointerEventData eventData) => InvokeOptionSelected();
 
         // If we mouse-over, we're telling the UI system that this element is
         // the currently 'selected' (i.e. focused) element. 
-        public override void OnPointerEnter(PointerEventData eventData)
-        {
-            base.Select();
-        }
+        public override void OnPointerEnter(PointerEventData eventData) => base.Select();
     }
 }

@@ -29,10 +29,7 @@ namespace Yarn.Unity.Editor
         /// <param name="name">The name of the scripting define symbol.</param>
         /// <returns>A <see cref="ScriptingDefineSymbol"/> object that
         /// represents <paramref name="name"/>.</returns>
-        public static ScriptingDefineSymbol GetSymbol(string name)
-        {
-            return new ScriptingDefineSymbol(name);
-        }
+        public static ScriptingDefineSymbol GetSymbol(string name) => new ScriptingDefineSymbol(name);
 
         /// <summary>
         /// Gets the name of the symbol that this object represents.

@@ -246,10 +246,7 @@ namespace Yarn.Unity
             canvasGroup.blocksRaycasts = false;
         }
 
-        private void Reset()
-        {
-            canvasGroup = GetComponentInParent<CanvasGroup>();
-        }
+        private void Reset() => canvasGroup = GetComponentInParent<CanvasGroup>();
 
         /// <inheritdoc/>
         public override void DismissLine(Action onDismissalComplete)
@@ -527,13 +524,11 @@ namespace Yarn.Unity
         /// <summary>
         /// Called when the <see cref="continueButton"/> is clicked.
         /// </summary>
-        public void OnContinueClicked()
-        {
+        public void OnContinueClicked() =>
             // When the Continue button is clicked, we'll do the same thing as
             // if we'd received a signal from any other part of the game (for
             // example, if a DialogueAdvanceInput had signalled us.)
             UserRequestedViewAdvancement();
-        }
 
         /// <inheritdoc />
         /// <remarks>

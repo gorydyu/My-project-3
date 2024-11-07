@@ -200,11 +200,7 @@ namespace Yarn.Unity.Editor
             EditorGUI.EndProperty();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-
-            return GetPropertyHeightImpl(property, label);
-        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => GetPropertyHeightImpl(property, label);
 
         public static float GetPropertyHeightImpl(SerializedProperty property, GUIContent label)
         {

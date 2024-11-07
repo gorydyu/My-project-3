@@ -1051,10 +1051,7 @@ namespace Yarn.Unity
             onSuccessfulDispatch();
         }
 
-        private void PrepareForLines(IEnumerable<string> lineIDs)
-        {
-            lineProvider.PrepareForLines(lineIDs);
-        }
+        private void PrepareForLines(IEnumerable<string> lineIDs) => lineProvider.PrepareForLines(lineIDs);
 
         /// <summary>
         /// Called when a <see cref="DialogueViewBase"/> has finished

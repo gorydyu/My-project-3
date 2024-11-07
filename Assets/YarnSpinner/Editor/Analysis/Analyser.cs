@@ -107,9 +107,7 @@ namespace Yarn.Unity.ActionAnalyser
             return namespaceDecl.NormalizeWhitespace().ToFullString();
         }
 
-        private static MethodDeclarationSyntax GenerateInitialisationMethod()
-        {
-            return SyntaxFactory.MethodDeclaration(
+        private static MethodDeclarationSyntax GenerateInitialisationMethod() => SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(
                     SyntaxFactory.Token(SyntaxKind.VoidKeyword)
                 ),
@@ -235,7 +233,6 @@ namespace Yarn.Unity.ActionAnalyser
                 )
             )
             .NormalizeWhitespace();
-        }
 
         public static MethodDeclarationSyntax GenerateRegistrationMethod(IEnumerable<Action> actions)
         {
@@ -525,10 +522,7 @@ namespace Yarn.Unity.ActionAnalyser
             }
         }
 
-        internal static bool IsAttributeYarnCommand(AttributeData attribute)
-        {
-            return GetActionType(attribute) != ActionType.NotAnAction;
-        }
+        internal static bool IsAttributeYarnCommand(AttributeData attribute) => GetActionType(attribute) != ActionType.NotAnAction;
 
         internal static ActionType GetActionType(SemanticModel model, MethodDeclarationSyntax decl, out AttributeSyntax actionAttribute)
         {

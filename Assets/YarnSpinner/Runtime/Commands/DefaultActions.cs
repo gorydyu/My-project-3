@@ -15,18 +15,15 @@ namespace Yarn.Unity
         [UnityEditor.InitializeOnLoadMethod]
 #endif
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        public static void AddRegisterFunction() {
+        public static void AddRegisterFunction() =>
             // When the domain is reloaded, scripts are recompiled, or the game
             // starts, add RegisterActions as a method that populates a
             // DialogueRunner or Library with commands and functions.
             Actions.AddRegistrationMethod(RegisterActions);
-        }
 
-        public static void RegisterActions(IActionRegistration target)
-        {
+        public static void RegisterActions(IActionRegistration target) =>
             // Register the built-in methods and commands from Yarn Spinner for Unity.
             target.AddCommandHandler<float>("wait", Wait);
-        }
 
         #region Commands
         /// <summary>

@@ -49,10 +49,7 @@ namespace Yarn.Unity
             canvasGroup.blocksRaycasts = false;
         }
 
-        public void Reset()
-        {
-            canvasGroup = GetComponentInParent<CanvasGroup>();
-        }
+        public void Reset() => canvasGroup = GetComponentInParent<CanvasGroup>();
 
         public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
@@ -215,10 +212,7 @@ namespace Yarn.Unity
             }
         }
 
-        public void OnEnable()
-        {
-            Relayout();
-        }
+        public void OnEnable() => Relayout();
 
         private void Relayout()
         {

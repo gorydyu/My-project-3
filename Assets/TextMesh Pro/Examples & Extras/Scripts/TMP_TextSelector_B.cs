@@ -55,17 +55,13 @@ namespace TMPro.Examples
         }
 
 
-        void OnEnable()
-        {
+        void OnEnable() =>
             // Subscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
-        }
 
-        void OnDisable()
-        {
+        void OnDisable() =>
             // UnSubscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
-        }
 
 
         void ON_TEXT_CHANGED(Object obj)
@@ -290,18 +286,14 @@ namespace TMPro.Examples
         }
 
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
+        public void OnPointerEnter(PointerEventData eventData) =>
             //Debug.Log("OnPointerEnter()");
             isHoveringObject = true;
-        }
 
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
+        public void OnPointerExit(PointerEventData eventData) =>
             //Debug.Log("OnPointerExit()");
             isHoveringObject = false;
-        }
 
 
         public void OnPointerClick(PointerEventData eventData)

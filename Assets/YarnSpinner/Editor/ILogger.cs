@@ -25,37 +25,24 @@ namespace Yarn.Unity
             this.writer = writer;
         }
 
-        public void Dispose()
-        {
-            writer.Dispose();
-        }
+        public void Dispose() => writer.Dispose();
 
-        public void Write(object text)
-        {
-            writer.Write(text);
-        }
+        public void Write(object text) => writer.Write(text);
 
-        public void WriteLine(object text)
-        {
-            writer.WriteLine(text);
-        }
+        public void WriteLine(object text) => writer.WriteLine(text);
     }
 
     public class UnityLogger : ILogger
     {
         public void Dispose() { }
 
-        public void Write(object text)
-        {
-            WriteLine(text);
-        }
+        public void Write(object text) => WriteLine(text);
 
-        public void WriteLine(object text)
-        {
+        public void WriteLine(object text) =>
 #if UNITY_EDITOR
         Debug.LogWarning(text.ToString());
 #endif
-        }
+
     }
 
     public class NullLogger : ILogger

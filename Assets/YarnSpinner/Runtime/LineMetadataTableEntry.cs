@@ -182,21 +182,15 @@ namespace Yarn.Unity
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"LineMetadataTableEntry: id={ID} file={File} node={Node} line={LineNumber} metadata={string.Join(" ", Metadata)}";
-        }
+        public override string ToString() => $"LineMetadataTableEntry: id={ID} file={File} node={Node} line={LineNumber} metadata={string.Join(" ", Metadata)}";
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            return obj is LineMetadataTableEntry entry &&
+        public override bool Equals(object obj) => obj is LineMetadataTableEntry entry &&
                    ID == entry.ID &&
                    File == entry.File &&
                    Node == entry.Node &&
                    LineNumber == entry.LineNumber &&
                    Enumerable.SequenceEqual(Metadata, entry.Metadata);
-        }
 
         /// <inheritdoc/>
         public override int GetHashCode()

@@ -67,10 +67,7 @@ namespace Yarn.Unity.Editor
         {
             const string WORD_BREAK = "{}[],:\"";
 
-            public static bool IsWordBreak(char c)
-            {
-                return Char.IsWhiteSpace(c) || WORD_BREAK.IndexOf(c) != -1;
-            }
+            public static bool IsWordBreak(char c) => Char.IsWhiteSpace(c) || WORD_BREAK.IndexOf(c) != -1;
 
             enum TOKEN
             {
@@ -416,10 +413,7 @@ namespace Yarn.Unity.Editor
         /// </summary>
         /// <param name="json">A Dictionary&lt;string, object&gt; / List&lt;object&gt;</param>
         /// <returns>A JSON encoded string, or null if object 'json' is not serializable</returns>
-        public static string Serialize(object obj)
-        {
-            return Serializer.Serialize(obj);
-        }
+        public static string Serialize(object obj) => Serializer.Serialize(obj);
 
         sealed class Serializer
         {

@@ -27,9 +27,7 @@ namespace Yarn.Unity
         /// <param name="language">The language to use when generating the
         /// address.</param>
         /// <returns>The address to use.</returns>
-        internal static string GetAddressForLine(string lineID, string language) {
-            return $"line_{language}_{lineID.Replace("line:", "")}";
-        }
+        internal static string GetAddressForLine(string lineID, string language) => $"line_{language}_{lineID.Replace("line:", "")}";
 
         public string LocaleCode { get => _LocaleCode; set => _LocaleCode = value; }
 
@@ -110,9 +108,7 @@ namespace Yarn.Unity
         /// ID.)</param>
         /// <param name="value">The user-facing text for this string, in the
         /// language specified by <see cref="LocaleCode"/>.</param>
-        internal void AddLocalisedStringToAsset(string key, string value) {
-            _stringTable.Add(key, value);
-        }
+        internal void AddLocalisedStringToAsset(string key, string value) => _stringTable.Add(key, value);
 
         /// <summary>
         /// Adds a new string to the runtime string table.
@@ -127,10 +123,7 @@ namespace Yarn.Unity
         /// ID.)</param>
         /// <param name="value">The user-facing text for this string, in the
         /// language specified by <see cref="LocaleCode"/>.</param>
-        public void AddLocalizedString(string key, string value)
-        {
-            _runtimeStringTable.Add(key, value);
-        }
+        public void AddLocalizedString(string key, string value) => _runtimeStringTable.Add(key, value);
 
         /// <summary>
         /// Adds a collection of strings to the runtime string table.

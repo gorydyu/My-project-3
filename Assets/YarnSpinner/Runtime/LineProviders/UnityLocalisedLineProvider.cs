@@ -296,16 +296,11 @@ namespace Yarn.Unity.UnityLocalization
 #else
         public override string LocaleCode => "error";
 
-        public override void PrepareForLines(IEnumerable<string> lineIDs) {
-            Debug.LogError($"{nameof(UnityLocalisedLineProvider)} requires that the Unity Localization package is installed in the project. To fix this, install Unity Localization.");
-        }
+        public override void PrepareForLines(IEnumerable<string> lineIDs) => Debug.LogError($"{nameof(UnityLocalisedLineProvider)} requires that the Unity Localization package is installed in the project. To fix this, install Unity Localization.");
 
         public override bool LinesAvailable => true; // likewise later we should check that it has actually loaded the string table
 
-        public override void Start()
-        {
-            Debug.LogError($"{nameof(UnityLocalisedLineProvider)} requires that the Unity Localization package is installed in the project. To fix this, install Unity Localization.");
-        }
+        public override void Start() => Debug.LogError($"{nameof(UnityLocalisedLineProvider)} requires that the Unity Localization package is installed in the project. To fix this, install Unity Localization.");
         public override LocalizedLine GetLocalizedLine(Yarn.Line line)
         {
             Debug.LogError($"{nameof(UnityLocalisedLineProvider)}: Can't create a localised line for ID {line.ID} because the Unity Localization package is not installed in this project. To fix this, install Unity Localization.");

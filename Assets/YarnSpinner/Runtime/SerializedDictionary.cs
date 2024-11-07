@@ -48,70 +48,37 @@ namespace Yarn.Unity
         public TValue this[TKey key] { get => ((IDictionary<TKey, TValue>)table)[key]; set => ((IDictionary<TKey, TValue>)table)[key] = value; }
 
         /// <inheritdoc/>
-        public void Add(TKey key, TValue value)
-        {
-            ((IDictionary<TKey, TValue>)table).Add(key, value);
-        }
+        public void Add(TKey key, TValue value) => ((IDictionary<TKey, TValue>)table).Add(key, value);
 
         /// <inheritdoc/>
-        public bool ContainsKey(TKey key)
-        {
-            return ((IDictionary<TKey, TValue>)table).ContainsKey(key);
-        }
+        public bool ContainsKey(TKey key) => ((IDictionary<TKey, TValue>)table).ContainsKey(key);
 
         /// <inheritdoc/>
-        public bool Remove(TKey key)
-        {
-            return ((IDictionary<TKey, TValue>)table).Remove(key);
-        }
+        public bool Remove(TKey key) => ((IDictionary<TKey, TValue>)table).Remove(key);
 
         /// <inheritdoc/>
-        public bool TryGetValue(TKey key, out TValue value)
-        {
-            return ((IDictionary<TKey, TValue>)table).TryGetValue(key, out value);
-        }
+        public bool TryGetValue(TKey key, out TValue value) => ((IDictionary<TKey, TValue>)table).TryGetValue(key, out value);
 
         /// <inheritdoc/>
-        public void Add(KeyValuePair<TKey, TValue> item)
-        {
-            ((ICollection<KeyValuePair<TKey, TValue>>)table).Add(item);
-        }
+        public void Add(KeyValuePair<TKey, TValue> item) => ((ICollection<KeyValuePair<TKey, TValue>>)table).Add(item);
 
         /// <inheritdoc/>
-        public void Clear()
-        {
-            ((ICollection<KeyValuePair<TKey, TValue>>)table).Clear();
-        }
+        public void Clear() => ((ICollection<KeyValuePair<TKey, TValue>>)table).Clear();
 
         /// <inheritdoc/>
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            return ((ICollection<KeyValuePair<TKey, TValue>>)table).Contains(item);
-        }
+        public bool Contains(KeyValuePair<TKey, TValue> item) => ((ICollection<KeyValuePair<TKey, TValue>>)table).Contains(item);
 
         /// <inheritdoc/>
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            ((ICollection<KeyValuePair<TKey, TValue>>)table).CopyTo(array, arrayIndex);
-        }
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => ((ICollection<KeyValuePair<TKey, TValue>>)table).CopyTo(array, arrayIndex);
 
         /// <inheritdoc/>
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            return ((ICollection<KeyValuePair<TKey, TValue>>)table).Remove(item);
-        }
+        public bool Remove(KeyValuePair<TKey, TValue> item) => ((ICollection<KeyValuePair<TKey, TValue>>)table).Remove(item);
 
         /// <inheritdoc/>
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return ((IEnumerable<KeyValuePair<TKey, TValue>>)table).GetEnumerator();
-        }
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => ((IEnumerable<KeyValuePair<TKey, TValue>>)table).GetEnumerator();
 
         /// <inheritdoc/>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable)table).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)table).GetEnumerator();
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {

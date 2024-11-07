@@ -41,12 +41,10 @@ namespace Yarn.Unity
         /// Gets the line IDs that contain metadata.
         /// </summary>
         /// <returns>The line IDs.</returns>
-        public IEnumerable<string> GetLineIDs()
-        {
+        public IEnumerable<string> GetLineIDs() =>
             // The object returned doesn't allow modifications and is kept in
             // sync with `_lineMetadata`.
-            return _lineMetadata.Keys;
-        }
+            _lineMetadata.Keys;
 
         /// <summary>
         /// Returns metadata for a given line ID, if any is defined.

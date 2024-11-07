@@ -732,33 +732,26 @@ namespace Yarn.Unity.Editor
             return LineMetadataTableEntriesFromCompilationResult(compilationResult.Value);
         }
 
-        private IEnumerable<StringTableEntry> GetStringTableEntries(CompilationResult result)
+        private IEnumerable<StringTableEntry> GetStringTableEntries(CompilationResult result) => result.StringTable.Select(x => new StringTableEntry
         {
-            
-            return result.StringTable.Select(x => new StringTableEntry
-            {
-                ID = x.Key,
-                Language = GetProject().BaseLanguage,
-                Text = x.Value.text,
-                File = x.Value.fileName,
-                Node = x.Value.nodeName,
-                LineNumber = x.Value.lineNumber.ToString(),
-                Lock = YarnImporter.GetHashString(x.Value.text, 8),
-                Comment = GenerateCommentWithLineMetadata(x.Value.metadata),
-            });
-        }
+            ID = x.Key,
+            Language = GetProject().BaseLanguage,
+            Text = x.Value.text,
+            File = x.Value.fileName,
+            Node = x.Value.nodeName,
+            LineNumber = x.Value.lineNumber.ToString(),
+            Lock = YarnImporter.GetHashString(x.Value.text, 8),
+            Comment = GenerateCommentWithLineMetadata(x.Value.metadata),
+        });
 
-        private IEnumerable<LineMetadataTableEntry> LineMetadataTableEntriesFromCompilationResult(CompilationResult result)
+        private IEnumerable<LineMetadataTableEntry> LineMetadataTableEntriesFromCompilationResult(CompilationResult result) => result.StringTable.Select(x => new LineMetadataTableEntry
         {
-            return result.StringTable.Select(x => new LineMetadataTableEntry
-            {
-                ID = x.Key,
-                File = x.Value.fileName,
-                Node = x.Value.nodeName,
-                LineNumber = x.Value.lineNumber.ToString(),
-                Metadata = RemoveLineIDFromMetadata(x.Value.metadata).ToArray(),
-            }).Where(x => x.Metadata.Length > 0);
-        }
+            ID = x.Key,
+            File = x.Value.fileName,
+            Node = x.Value.nodeName,
+            LineNumber = x.Value.lineNumber.ToString(),
+            Metadata = RemoveLineIDFromMetadata(x.Value.metadata).ToArray(),
+        }).Where(x => x.Metadata.Length > 0);
 
         /// <summary>
         /// Generates a string with the line metadata. This string is intended
@@ -791,10 +784,7 @@ namespace Yarn.Unity.Editor
         /// </summary>
         /// <param name="metadata">The array with line metadata.</param>
         /// <returns>An IEnumerable with any line ID entries removed.</returns>
-        private IEnumerable<string> RemoveLineIDFromMetadata(string[] metadata)
-        {
-            return metadata.Where(x => !x.StartsWith("line:"));
-        }
+        private IEnumerable<string> RemoveLineIDFromMetadata(string[] metadata) => metadata.Where(x => !x.StartsWith("line:"));
         public const string UnityProjectRootVariable = "${UnityProjectRoot}";
     }
 

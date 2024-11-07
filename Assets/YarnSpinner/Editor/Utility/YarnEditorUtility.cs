@@ -73,8 +73,7 @@ namespace Yarn.Unity.Editor
         /// the Editor.
         /// </summary>    
         [MenuItem("Assets/Create/Yarn Spinner/Yarn Script", false, 10)]
-        public static void CreateYarnAsset()
-        {
+        public static void CreateYarnAsset() =>
 
             // This method call is undocumented, but public. It's defined
             // in ProjectWindowUtil, and used by other parts of the editor
@@ -85,11 +84,9 @@ namespace Yarn.Unity.Editor
                 "NewYarnScript.yarn",
                 GetYarnDocumentIconTexture(),
                 GetTemplateYarnScriptPath());
-        }
 
         [MenuItem("Assets/Create/Yarn Spinner/Yarn Project", false, 101)]
-        public static void CreateYarnProject()
-        {
+        public static void CreateYarnProject() =>
             // This method call is undocumented, but public. It's defined
             // in ProjectWindowUtil, and used by other parts of the editor
             // to create other kinds of assets (scripts, textures, etc).
@@ -99,7 +96,6 @@ namespace Yarn.Unity.Editor
                 "NewProject.yarnproject",
                 GetYarnProjectIconTexture(),
                 GetTemplateYarnScriptPath());
-        }
 
         /// <summary>
         /// Creates a new Yarn project at the given path, using the default
@@ -121,10 +117,7 @@ namespace Yarn.Unity.Editor
         /// </summary>
         /// <param name="path">The path at which to create the
         /// script.</param>
-        public static Object CreateYarnAsset(string path)
-        {
-            return CreateYarnScriptAssetFromTemplate(path, GetTemplateYarnScriptPath());
-        }
+        public static Object CreateYarnAsset(string path) => CreateYarnScriptAssetFromTemplate(path, GetTemplateYarnScriptPath());
 
         private static Object CreateYarnScriptAssetFromTemplate(string pathName, string resourceFile)
         {

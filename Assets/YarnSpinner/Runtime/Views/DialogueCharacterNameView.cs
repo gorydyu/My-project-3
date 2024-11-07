@@ -47,10 +47,7 @@ namespace Yarn.Unity
         /// <seealso cref="onNameUpdate"/>
         public UnityEvent onNameNotPresent;
 
-        public override void DialogueStarted()
-        {
-            onDialogueStarted?.Invoke();
-        }
+        public override void DialogueStarted() => onDialogueStarted?.Invoke();
 
         public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {

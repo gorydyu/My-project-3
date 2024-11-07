@@ -285,10 +285,8 @@ namespace Yarn.Unity
         /// <remarks>
         /// Stops any audio if there is still any playing.
         /// </remarks>
-        public override void DialogueComplete()
-        {
+        public override void DialogueComplete() =>
             // just in case we are still playing audio we want it to stop
             audioSource.Stop();
-        }
     }
 }
