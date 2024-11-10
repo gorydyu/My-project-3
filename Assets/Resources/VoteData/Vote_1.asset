@@ -20,3 +20,9 @@ MonoBehaviour:
     probability: 50
   - optionName: "\u30AB\u30AE"
     probability: 50
+  - optionName: "\u4EA4\u901A\u30AB\u30FC\u30C9"
+    probability: 50
+  - optionName: "\u304A\u9152"
+    probability: 50
+  - optionName: "\u30AB\u30AE"
+    probability: 50
