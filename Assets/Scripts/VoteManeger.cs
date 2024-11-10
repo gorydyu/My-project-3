@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class VoteManeger : MonoBehaviour
 {
@@ -28,5 +29,74 @@ public class VoteManeger : MonoBehaviour
             Debug.Log($"VoteSceneOp: {entry.Key}, Option Value: {entry.Value}");
         }
     }
-}
 
+
+    // 참고 /////////////////////////////////////////////////////////////////
+
+    // 투표 기록 데이터를 투표 이름으로 가져오는 딕셔너리
+    // VoteRecord (투표 기록 데이터): Vote(투표 이름, 선택지 데이터), 선택지 선택 누적 수 배열
+    private Dictionary<string, VoteRecord> voteRecordDict = new Dictionary<string, VoteRecord>();
+
+    [SerializeField] private InMemoryVariableStorage storage;
+
+    void Start()
+    {
+        CreateVoteRecordDict();
+    }
+
+    private void CreateVoteRecordDict()
+    {
+        var voteDataArr = Resources.LoadAll<Vote>("VoteData/");
+        
+        foreach (Vote data in voteDataArr)
+        {
+            VoteRecord record = new VoteRecord(data);
+            voteRecordDict[data.VoteName] = record;
+        }
+    }
+
+    [YarnCommand]
+    public void GetVoteSelections(string voteName)
+    {
+        List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
+        for (int i = 0; i < options.Count; i++)
+        {
+            storage.SetValue($"$selection{i}", options[i].OptionName);
+            storage.SetValue($"$selectCount{i}", voteRecordDict[voteName].GetOptionCount(i));
+        }
+    }
+
+    [YarnCommand]
+    public void InreaseSelectionCount(string voteName, int index)
+    {
+        voteRecordDict[voteName].IncreaseOptionCount(index);
+    }
+
+    [YarnCommand]
+    public void GetLargestSelect(string voteName)
+    {
+        List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
+        int largestSelect = 0;
+        int maxCount = -1;
+
+        for (int i = 0; i < options.Count; i++)
+        {
+            int count = voteRecordDict[voteName].GetOptionCount(i);
+            if (maxCount < count)
+            {
+                maxCount = count;
+                largestSelect = i;
+            }
+        }
+        storage.SetValue("$largestSelect", largestSelect);
+    }
+
+    [YarnCommand]
+    public void GetSelectProbability(string voteName, int index)
+    {
+        int probability = voteRecordDict[voteName].VoteData.Options[index].Probability;
+        storage.SetValue("$largestSelectProbability", probability);
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+}
