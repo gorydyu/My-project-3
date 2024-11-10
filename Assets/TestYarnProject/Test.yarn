@@ -27,7 +27,7 @@ position: -156,-86
 /// Scene 1: Black screen with ringing sound
 あなたはうるさいアラムの音で起きてしまい、ひどい頭痛をかんじる。
 ...
-<<set $voteID = "Vote_1">>
+<<set $voteID = "もの">>
 <<jump SelectionNode>>
 ===
 
@@ -37,7 +37,7 @@ position: 88,-244
 // Get the vote selections
 <<GetVoteSelections VoteSelectionSaver {$voteID}>>
 
-Choose an item to take:
+Choose an item to take
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {0}>>
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {2}>>
@@ -77,10 +77,10 @@ title: ReVoteNodeA_B
 Choose between:
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 ===
 
 title: ReVoteNodeA_C
@@ -90,10 +90,10 @@ title: ReVoteNodeA_C
 Choose between:
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 -> {$selection2}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 ===
 
 title: ReVoteNodeB_C
@@ -103,10 +103,10 @@ title: ReVoteNodeB_C
 Choose between:
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 -> {$selection2}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump RevoteProbabilityNode>>
+    <<jump ReProbabilityNode>>
 ===
 
 title: ReVoteNodeAll
@@ -125,6 +125,25 @@ Choose an item to take:
     <<jump ProbabilityNode>>
 ===
 
+title: ReCheckForTie
+position: 300,44
+---
+// Check for a tie and set tieType
+<<CheckReTieAndSetType VoteSelectionSaver {$voteID}>>
+
+<<if $tieType == 1>>
+    <<jump ReReVoteNodeA_B>> // Tie between A and B
+<<elseif $tieType == 2>>
+    <<jump ReReVoteNodeA_C>> // Tie between A and C
+<<elseif $tieType == 3>>
+    <<jump ReReVoteNodeB_C>> // Tie between B and C
+<<elseif $tieType == 4>>
+    <<jump ReReVoteNodeAll>> // Tie among A, B, and C
+<<else>>
+    <<jump ReProbabilityNode>> // No tie, continue normally
+<<endif>>
+===
+
 title: ProbabilityNode
 position: 333,-253
 ---
@@ -141,7 +160,7 @@ position: 333,-253
 <<jump DecisionNode>>
 ===
 
-title: RevoteProbabilityNode
+title: ReProbabilityNode
 position: 333,-253
 ---
 // Get probability and determine if selection is successful

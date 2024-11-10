@@ -8,7 +8,7 @@ public class VoteManeger : MonoBehaviour
 
     // 투표 기록 데이터를 투표 이름으로 가져오는 딕셔너리
     // VoteRecord (투표 기록 데이터): Vote(투표 이름, 선택지 데이터), 선택지 선택 누적 수 배열
-    private Dictionary<string, VoteRecord> voteRecordDict = new Dictionary<string, VoteRecord>();
+    public Dictionary<string, VoteRecord> voteRecordDict = new Dictionary<string, VoteRecord>();
 
     [SerializeField] private InMemoryVariableStorage storage;
 
@@ -30,31 +30,31 @@ public class VoteManeger : MonoBehaviour
 
     [YarnCommand]
     public void GetVoteSelections(string voteName)
-    {
-        var vote = voteRecordDict[voteName];
-        List<VoteOption> options = vote.VoteData.Options;
-        int halfCount = options.Count / 2;
-
-        for (int i = 0; i < halfCount; i++)
         {
-            storage.SetValue($"$selection{i}", options[i].OptionName);
-            storage.SetValue($"$selectCount{i}", vote.GetOptionCount(i));
-            Debug.Log($"Vote Selection {i}: Option Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
+            var vote = voteRecordDict[voteName];
+            List<VoteOption> options = vote.VoteData.Options;
+            int halfCount = options.Count / 2;
+
+            for (int i = 0; i < halfCount; i++)
+            {
+                storage.SetValue($"$selection{i}", options[i].OptionName);
+                storage.SetValue($"$selectCount{i}", vote.GetOptionCount(i));
+                Debug.Log($"Vote Selection {i}: Option Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
+            }
         }
-    }
     
     [YarnCommand]
         public void GetReVoteSelections(string voteName)
-    {
-        List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
-        int halfCount = options.Count / 2;
-        for (int i = halfCount; i < options.Count; i++)
         {
-            storage.SetValue($"$reVoteSelection{i - halfCount}", options[i].OptionName);
-            storage.SetValue($"$reVoteSelectCount{i - halfCount}", voteRecordDict[voteName].GetOptionCount(i));
-            Debug.Log($"Re-Vote Selection {i - halfCount}: Option Name = {options[i].OptionName}, Count = {voteRecordDict[voteName].GetOptionCount(i)}");
+            List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
+            int halfCount = options.Count / 2;
+            for (int i = halfCount; i < options.Count; i++)
+            {
+                storage.SetValue($"$reVoteSelection{i - halfCount}", options[i].OptionName);
+                storage.SetValue($"$reVoteSelectCount{i - halfCount}", voteRecordDict[voteName].GetOptionCount(i));
+             Debug.Log($"Re-Vote Selection {i - halfCount}: Option Name = {options[i].OptionName}, Count = {voteRecordDict[voteName].GetOptionCount(i)}");
+            }
         }
-    }
 
     [YarnCommand]
     public void CheckTieAndSetType(string voteName)
@@ -73,7 +73,7 @@ public class VoteManeger : MonoBehaviour
         storage.SetValue("$tieType", tieType);
     }
 
-     [YarnCommand]
+    [YarnCommand]
         public void CheckReTieAndSetType(string voteName)
     {
         int countA = voteRecordDict[voteName].GetOptionCount(3);
@@ -155,7 +155,31 @@ public class VoteManeger : MonoBehaviour
         {
             Debug.Log($"Vote Selection {i}: Option Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
         }
+    }
 
+    [YarnCommand]
+    public void SaveVoteDataToStorage(string voteName)
+    {
+        // Retrieve the vote data from the dictionary
+        if (!voteRecordDict.ContainsKey(voteName))
+        {
+            Debug.LogWarning($"Vote '{voteName}' not found.");
+            return;
+        }
+        
+        var vote = voteRecordDict[voteName];
+        List<VoteOption> options = vote.VoteData.Options;
+
+        // Save vote name
+        storage.SetValue("$voteName", vote.VoteData.VoteName);
+        
+        // Save each option's name and count
+        for (int i = 0; i < options.Count; i++)
+        {
+            storage.SetValue($"$option{i + 1}Name", options[i].OptionName);
+            storage.SetValue($"$option{i + 1}Count", vote.GetOptionCount(i));
+            Debug.Log($"Saved: Option {i + 1} Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
+        }
     }
 
 }
