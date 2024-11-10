@@ -69,6 +69,7 @@ position: 300,44
 <<endif>>
 ===
 
+
 title: ReVoteNodeA_B
 ---
 <<GetReVoteSelections VoteSelectionSaver {$voteID}>>
@@ -76,10 +77,10 @@ title: ReVoteNodeA_B
 Choose between:
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 ===
 
 title: ReVoteNodeA_C
@@ -89,10 +90,10 @@ title: ReVoteNodeA_C
 Choose between:
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 -> {$selection2}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 ===
 
 title: ReVoteNodeB_C
@@ -102,10 +103,10 @@ title: ReVoteNodeB_C
 Choose between:
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 -> {$selection2}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump ProbabilityNode>>
+    <<jump RevoteProbabilityNode>>
 ===
 
 title: ReVoteNodeAll
@@ -129,6 +130,22 @@ position: 333,-253
 ---
 // Get probability and determine if selection is successful
 <<GetLargestSelect VoteSelectionSaver {$voteID}>>
+<<GetSelectProbability VoteSelectionSaver {$voteID} {$largestSelect}>>
+
+<<if random_range(1,100) <= $largestSelectProbability>>
+    <<set $isSuccess = true>>
+<<else>>
+    <<set $isSuccess = false>>
+<<endif>>
+
+<<jump DecisionNode>>
+===
+
+title: RevoteProbabilityNode
+position: 333,-253
+---
+// Get probability and determine if selection is successful
+<<GetReLargestSelect VoteSelectionSaver {$voteID}>>
 <<GetSelectProbability VoteSelectionSaver {$voteID} {$largestSelect}>>
 
 <<if random_range(1,100) <= $largestSelectProbability>>
