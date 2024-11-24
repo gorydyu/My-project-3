@@ -55,4 +55,5 @@ public class VoteRecord
     
     public Vote VoteData => voteData;
     public int[] OptionCounts => optionCounts;
+    
 }

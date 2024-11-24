@@ -33,9 +33,9 @@ public class VoteManeger : MonoBehaviour
         {
             var vote = voteRecordDict[voteName];
             List<VoteOption> options = vote.VoteData.Options;
-            int halfCount = options.Count / 2;
+            int Count = options.Count;
 
-            for (int i = 0; i < halfCount; i++)
+            for (int i = 0; i < Count; i++)
             {
                 storage.SetValue($"$selection{i}", options[i].OptionName);
                 storage.SetValue($"$selectCount{i}", vote.GetOptionCount(i));
@@ -43,25 +43,13 @@ public class VoteManeger : MonoBehaviour
             }
         }
     
-    [YarnCommand]
-        public void GetReVoteSelections(string voteName)
-        {
-            List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
-            int halfCount = options.Count / 2;
-            for (int i = halfCount; i < options.Count; i++)
-            {
-                storage.SetValue($"$reVoteSelection{i - halfCount}", options[i].OptionName);
-                storage.SetValue($"$reVoteSelectCount{i - halfCount}", voteRecordDict[voteName].GetOptionCount(i));
-             Debug.Log($"Re-Vote Selection {i - halfCount}: Option Name = {options[i].OptionName}, Count = {voteRecordDict[voteName].GetOptionCount(i)}");
-            }
-        }
 
     [YarnCommand]
-    public void CheckTieAndSetType(string voteName)
+    public void CheckTieAndSetType3(string voteName, int optionIndex1, int optionIndex2, int optionIndex3 )
     {
-        int countA = voteRecordDict[voteName].GetOptionCount(0);
-        int countB = voteRecordDict[voteName].GetOptionCount(1);
-        int countC = voteRecordDict[voteName].GetOptionCount(2);
+        int countA = voteRecordDict[voteName].GetOptionCount(optionIndex1);
+        int countB = voteRecordDict[voteName].GetOptionCount(optionIndex2);
+        int countC = voteRecordDict[voteName].GetOptionCount(optionIndex3);
 
         int tieType = 0;
 
@@ -72,70 +60,78 @@ public class VoteManeger : MonoBehaviour
 
         storage.SetValue("$tieType", tieType);
     }
-
-    [YarnCommand]
-        public void CheckReTieAndSetType(string voteName)
+    public void CheckTieAndSetType2(string voteName, int optionIndex1, int optionIndex2)
     {
-        int countA = voteRecordDict[voteName].GetOptionCount(3);
-        int countB = voteRecordDict[voteName].GetOptionCount(4);
-        int countC = voteRecordDict[voteName].GetOptionCount(5);
+        // Get the vote counts for the specified options
+        int count1 = voteRecordDict[voteName].GetOptionCount(optionIndex1);
+        int count2 = voteRecordDict[voteName].GetOptionCount(optionIndex2);
 
-        int tieType = 0;
+        // Determine if there is a tie
+        int tieType = 0; // 0: No tie, 1: Tie
+        
+        if (count1 == count2)
+        {
+            tieType = 1; // Tie detected
+        }
 
-        if (countA == countB && countA > countC) tieType = 1;
-        else if (countA == countC && countA > countB) tieType = 2;
-        else if (countB == countC && countB > countA) tieType = 3;
-        else if (countA == countB && countA == countC) tieType = 4;
-
+        // Save the result to Yarn Spinner storage
         storage.SetValue("$tieType", tieType);
+
+    // Log the result for debugging
+        Debug.Log($"Tie check between options {optionIndex1} and {optionIndex2}: {(tieType == 1 ? "Tie" : "No tie")}");
     }
 
 
     [YarnCommand]
     public void InreaseSelectionCount(string voteName, int index)
     {
-        voteRecordDict[voteName].IncreaseOptionCount(index);
+        voteRecordDict[voteName].IncreaseOptionCount(index);        
+    }
+
+    [YarnCommand]
+    public void GetLargestSelect3(string voteName, int optionIndex1, int optionIndex2, int optionIndex3)
+    {
+        var voteRecord = voteRecordDict[voteName];
         
-    }
+        int count1 = voteRecord.GetOptionCount(optionIndex1);
+        int count2 = voteRecord.GetOptionCount(optionIndex2);
+        int count3 = voteRecord.GetOptionCount(optionIndex3);
+        int largestSelect = optionIndex1;
+        int maxCount = count1;
 
-    [YarnCommand]
-    public void GetLargestSelect(string voteName)
-    {
-        List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
-        int largestSelect = 0;
-        int maxCount = -1;
-
-        for (int i = 0; i < options.Count; i++)
+        if (count2 > maxCount)
         {
-            int count = voteRecordDict[voteName].GetOptionCount(i);
-            if (maxCount < count)
-            {
-                maxCount = count;
-                largestSelect = i;
-            }
+            largestSelect = optionIndex2;
+            maxCount = count2;
         }
+        if (count3 > maxCount)
+        {
+            largestSelect = optionIndex3;
+            maxCount = count3;
+        }
+
+        // Save the result
         storage.SetValue("$largestSelect", largestSelect);
     }
 
     [YarnCommand]
-    public void GetReLargestSelect(string voteName)
+    public void GetLargestSelect2(string voteName, int optionIndex1, int optionIndex2)
     {
-        List<VoteOption> options = voteRecordDict[voteName].VoteData.Options;
-        int largestSelect = 0;
-        int maxCount = -1;
-        int halfcount = options.Count / 2;
+        // Retrieve the vote record
+        var voteRecord = voteRecordDict[voteName];
 
-        for (int i = halfcount; i < options.Count; i++)
-        {
-            int count = voteRecordDict[voteName].GetOptionCount(i);
-            if (maxCount < count)
-            {
-                maxCount = count;
-                largestSelect = i;
-            }
-        }
-        storage.SetValue("$largestSelect", largestSelect);
+        // Retrieve the vote counts for the two options
+        int count1 = voteRecord.GetOptionCount(optionIndex1);
+        int count2 = voteRecord.GetOptionCount(optionIndex2);
+
+         // Determine the largest selection
+        int largestSelect = (count1 >= count2) ? optionIndex1 : optionIndex2;
+
+         // Save the result
+         storage.SetValue("$largestSelect", largestSelect);
+
     }
+
 
     [YarnCommand]
     public void GetSelectProbability(string voteName, int index)
@@ -154,31 +150,6 @@ public class VoteManeger : MonoBehaviour
         for (int i = 0; i < Count; i++)
         {
             Debug.Log($"Vote Selection {i}: Option Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
-        }
-    }
-
-    [YarnCommand]
-    public void SaveVoteDataToStorage(string voteName)
-    {
-        // Retrieve the vote data from the dictionary
-        if (!voteRecordDict.ContainsKey(voteName))
-        {
-            Debug.LogWarning($"Vote '{voteName}' not found.");
-            return;
-        }
-        
-        var vote = voteRecordDict[voteName];
-        List<VoteOption> options = vote.VoteData.Options;
-
-        // Save vote name
-        storage.SetValue("$voteName", vote.VoteData.VoteName);
-        
-        // Save each option's name and count
-        for (int i = 0; i < options.Count; i++)
-        {
-            storage.SetValue($"$option{i + 1}Name", options[i].OptionName);
-            storage.SetValue($"$option{i + 1}Count", vote.GetOptionCount(i));
-            Debug.Log($"Saved: Option {i + 1} Name = {options[i].OptionName}, Count = {vote.GetOptionCount(i)}");
         }
     }
 

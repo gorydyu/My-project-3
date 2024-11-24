@@ -14,6 +14,9 @@ position: -156,-86
 <<declare $selectCount0 = 0>>
 <<declare $selectCount1 = 0>>
 <<declare $selectCount2 = 0>>
+<<declare $selectCount3 = 0>>
+<<declare $selectCount4 = 0>>
+<<declare $selectCount5 = 0>>
 
 <<declare $largestSelect = 0>>
 <<declare $largestSelectProbability = 0>>
@@ -40,7 +43,6 @@ position: 88,-244
 Choose an item to take
 -> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {0}>>
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {2}>>
     <<jump CheckForTie>>
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {1}>>
@@ -53,10 +55,14 @@ Choose an item to take
 title: CheckForTie
 position: 300,44
 ---
+
+<<GetVoteSelections VoteSelectionSaver {$voteID}>>
+
 // Check for a tie and set tieType
-<<CheckTieAndSetType VoteSelectionSaver {$voteID}>>
+<<CheckTieAndSetType3 VoteSelectionSaver {$voteID} {0} {1} {2}>>
 
 <<if $tieType == 1>>
+    {$selection0} has {$selectCount0} votes and {$selection1} has {$selectCount1} so its a tie.
     <<jump ReVoteNodeA_B>> // Tie between A and B
 <<elseif $tieType == 2>>
     <<jump ReVoteNodeA_C>> // Tie between A and C
@@ -72,7 +78,7 @@ position: 300,44
 
 title: ReVoteNodeA_B
 ---
-<<GetReVoteSelections VoteSelectionSaver {$voteID}>>
+
 // Re-vote between tied options A and B
 Choose between:
 -> {$selection0}
@@ -85,7 +91,7 @@ Choose between:
 
 title: ReVoteNodeA_C
 ---
-<<GetReVoteSelections VoteSelectionSaver {$voteID}>>
+
 // Re-vote between tied options A and C
 Choose between:
 -> {$selection0}
@@ -98,7 +104,7 @@ Choose between:
 
 title: ReVoteNodeB_C
 ---
-<<GetReVoteSelections VoteSelectionSaver {$voteID}>>
+
 // Re-vote between tied options B and C
 Choose between:
 -> {$selection1}
@@ -111,7 +117,7 @@ Choose between:
 
 title: ReVoteNodeAll
 ---
-<<GetReVoteSelections VoteSelectionSaver {$voteID}>>
+
 // Re-vote between all options (A, B, C)
 Choose an item to take:
 -> {$selection0}
@@ -129,7 +135,7 @@ title: ReCheckForTie
 position: 300,44
 ---
 // Check for a tie and set tieType
-<<CheckReTieAndSetType VoteSelectionSaver {$voteID}>>
+
 
 <<if $tieType == 1>>
     <<jump ReReVoteNodeA_B>> // Tie between A and B
@@ -148,7 +154,7 @@ title: ProbabilityNode
 position: 333,-253
 ---
 // Get probability and determine if selection is successful
-<<GetLargestSelect VoteSelectionSaver {$voteID}>>
+<<GetLargestSelect3 VoteSelectionSaver {$voteID} {0} {1} {2}>>
 <<GetSelectProbability VoteSelectionSaver {$voteID} {$largestSelect}>>
 
 <<if random_range(1,100) <= $largestSelectProbability>>
