@@ -6,8 +6,8 @@ using Yarn.Unity;
 public class VoteManeger : MonoBehaviour
 {
 
-    // ÅõÇ¥ ±â·Ï µ¥ÀÌÅÍ¸¦ ÅõÇ¥ ÀÌ¸§À¸·Î °¡Á®¿À´Â µñ¼Å³Ê¸®
-    // VoteRecord (ÅõÇ¥ ±â·Ï µ¥ÀÌÅÍ): Vote(ÅõÇ¥ ÀÌ¸§, ¼±ÅÃÁö µ¥ÀÌÅÍ), ¼±ÅÃÁö ¼±ÅÃ ´©Àû ¼ö ¹è¿­
+    // å ì™ì˜™í‘œ å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ì‹¶ëªŒì˜™ å ì™ì˜™í‘œ å ì‹±ëªŒì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™í‚¬è¨¶å ï¿½
+    // VoteRecord (å ì™ì˜™í‘œ å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ì™ì˜™): Vote(å ì™ì˜™í‘œ å ì‹±ëªŒì˜™, å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™), å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™ å ì¼ì—´
     public Dictionary<string, VoteRecord> voteRecordDict = new Dictionary<string, VoteRecord>();
 
     [SerializeField] private InMemoryVariableStorage storage;
@@ -60,16 +60,17 @@ public class VoteManeger : MonoBehaviour
 
         storage.SetValue("$tieType", tieType);
     }
+    [YarnCommand]
     public void CheckTieAndSetType2(string voteName, int optionIndex1, int optionIndex2)
     {
         // Get the vote counts for the specified options
-        int count1 = voteRecordDict[voteName].GetOptionCount(optionIndex1);
-        int count2 = voteRecordDict[voteName].GetOptionCount(optionIndex2);
+        int countA = voteRecordDict[voteName].GetOptionCount(optionIndex1);
+        int countB = voteRecordDict[voteName].GetOptionCount(optionIndex2);
 
         // Determine if there is a tie
         int tieType = 0; // 0: No tie, 1: Tie
         
-        if (count1 == count2)
+        if (countA == countB)
         {
             tieType = 1; // Tie detected
         }

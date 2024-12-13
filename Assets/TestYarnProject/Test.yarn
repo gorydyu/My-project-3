@@ -1,6 +1,6 @@
 title: Start
 tags:
-position: -156,-86
+position: -265,-240
 ---
 <<declare $selection0 = "">>
 <<declare $selection1 = "">>
@@ -28,17 +28,47 @@ position: -156,-86
 <<declare $busCard = 0 >>
 
 /// Scene 1: Black screen with ringing sound
-あなたはうるさいアラムの音で起きてしまい、ひどい頭痛をかんじる。
+（暗い画面）
+周りが騒がしい。
+人々が会話する音や自動車のエンジンの音が段々鮮明になってくる。
+<<ChangeSprite VisualManager sprite5>>
+目を開けると、高層ビルの間に小さな白い建物が目に飛び込んでくる
+あなたは自分が道で気を失っていたことが分かった。
+そして何も思い出せないことに気が付く。そうあなたは今記憶を失っている状態だ。
+<<ChangeImage sprite5>>
+考える暇もなく、どこかで誰が叫んでいる音が聞こえている。
+<<ChangeSprite VisualManager sprite6>>
+声のする方に目を向けると、見知らぬ二人がこちらに向かって怒りながら近づいてくる。
+直感が告げている――この二人に捕まったら、きっととんでもないことになる、と。
+あなたは逃げることを決意する。
+目の前には、二つの逃げ道が見える。一つは、人がたくさん集まっている広場に紛れ込むこと。もう一つは、そのまま反対方向に走り続けることだ。
+（広場を映す画面）
+広場の人々に紛れれば、追いかけてくる二人を撒きやすくなるかもしれない。
+だが、真昼間にこれだけの人が集まっている光景に、どこか違和感を覚える。
+ここに紛れることで、もっと面倒な事態に巻き込まれるような予感がしてならない。
+（道路の画面）
+反対方向に走り続ければ、追っ手を振り切ることも可能かもしれない。
+だが、それには自分が彼らより体力で勝る必要がある。
+大きな賭けではあるが、運が良ければ逃げ切れる可能性もある。
 ...
-<<set $voteID = "もの">>
+<<set $voteID = "逃げみち">>
 <<jump SelectionNode>>
 ===
 
 title: SelectionNode
-position: 88,-244
+position: -2,-237
 ---
 // Get the vote selections
 <<GetVoteSelections VoteSelectionSaver {$voteID}>>
+目の前には、二つの逃げ道が見える。一つは、人がたくさん集まっている広場に紛れ込むこと。もう一つは、そのまま反対方向に走り続けることだ。
+（広場を映す画面）
+広場の人々に紛れれば、追いかけてくる二人を撒きやすくなるかもしれない。
+だが、真昼間にこれだけの人が集まっている光景に、どこか違和感を覚える。
+ここに紛れることで、もっと面倒な事態に巻き込まれるような予感がしてならない。
+（道路の画面）
+反対方向に走り続ければ、追っ手を振り切ることも可能かもしれない。
+だが、それには自分が彼らより体力で勝る必要がある。
+大きな賭けではあるが、運が良ければ逃げ切れる可能性もある
 
 Choose an item to take
 -> {$selection0}
@@ -47,92 +77,45 @@ Choose an item to take
 -> {$selection1}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {1}>>
     <<jump CheckForTie>>
--> {$selection2}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {2}>>
-    <<jump CheckForTie>>
+
 ===
 
 title: CheckForTie
-position: 300,44
+position: 323,-221
 ---
 
 <<GetVoteSelections VoteSelectionSaver {$voteID}>>
+<<CheckTieAndSetType2 VoteSelectionSaver {$voteID} {0} {1}>>
 
-// Check for a tie and set tieType
-<<CheckTieAndSetType3 VoteSelectionSaver {$voteID} {0} {1} {2}>>
+<<if $tieType == 0>>
+    <<jump ProbabilityNode>>
+<<endif>>
 
 <<if $tieType == 1>>
-    {$selection0} has {$selectCount0} votes and {$selection1} has {$selectCount1} so its a tie.
-    <<jump ReVoteNodeA_B>> // Tie between A and B
-<<elseif $tieType == 2>>
-    <<jump ReVoteNodeA_C>> // Tie between A and C
-<<elseif $tieType == 3>>
-    <<jump ReVoteNodeB_C>> // Tie between B and C
-<<elseif $tieType == 4>>
-    <<jump ReVoteNodeAll>> // Tie among A, B, and C
-<<else>>
-    <<jump ProbabilityNode>> // No tie, continue normally
+  {$selection0}の投票数は{$selectCount0}そして{$selection1}の投票数は{$selectCount1}なので再投票を行う
+    <<jump ReVoteNodeA_B>>
 <<endif>>
 ===
 
 
+
 title: ReVoteNodeA_B
+position: 351,48
 ---
 
 // Re-vote between tied options A and B
 Choose between:
 -> {$selection0}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
+    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {2}>>
     <<jump ReProbabilityNode>>
 -> {$selection1}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump ReProbabilityNode>>
-===
-
-title: ReVoteNodeA_C
----
-
-// Re-vote between tied options A and C
-Choose between:
--> {$selection0}
     <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
     <<jump ReProbabilityNode>>
--> {$selection2}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump ReProbabilityNode>>
 ===
 
-title: ReVoteNodeB_C
----
-
-// Re-vote between tied options B and C
-Choose between:
--> {$selection1}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump ReProbabilityNode>>
--> {$selection2}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump ReProbabilityNode>>
-===
-
-title: ReVoteNodeAll
----
-
-// Re-vote between all options (A, B, C)
-Choose an item to take:
--> {$selection0}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {3}>>
-    <<jump ProbabilityNode>>
--> {$selection1}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {4}>>
-    <<jump ProbabilityNode>>
--> {$selection2}
-    <<InreaseSelectionCount VoteSelectionSaver {$voteID} {5}>>
-    <<jump ProbabilityNode>>
-===
 
 title: ReCheckForTie
-position: 300,44
+position: 352,309
 ---
 // Check for a tie and set tieType
 
@@ -151,7 +134,7 @@ position: 300,44
 ===
 
 title: ProbabilityNode
-position: 333,-253
+position: 867,-228
 ---
 // Get probability and determine if selection is successful
 <<GetLargestSelect3 VoteSelectionSaver {$voteID} {0} {1} {2}>>
@@ -167,7 +150,7 @@ position: 333,-253
 ===
 
 title: ReProbabilityNode
-position: 333,-253
+position: 675,-1
 ---
 // Get probability and determine if selection is successful
 <<GetReLargestSelect VoteSelectionSaver {$voteID}>>
@@ -183,7 +166,7 @@ position: 333,-253
 ===
 
 title: DecisionNode
-position: 195,44
+position: 1400,26
 ---
 <<ShowVoteSelections VoteSelectionSaver {$voteID}>>
 
@@ -214,7 +197,7 @@ position: 195,44
 ===
 
 title: Outside_1
-position: 472,50
+position: 1199,342
 ---
 Wow!
 ===
