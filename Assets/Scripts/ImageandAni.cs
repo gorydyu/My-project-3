@@ -26,6 +26,10 @@ public class ImageandAni : MonoBehaviour
         }
     }
 
+    /*
+    // 내가 이해한게 맞다면 YarnCommand 등록 중복 때문에 에러 발생하는 것 같음
+    // ChangoTest.cs 에도 똑같은 이름의 YarnCommand 함수 있음
+
     [YarnCommand]
     public void ChangeImage(string spriteName)
     {
@@ -41,6 +45,7 @@ public class ImageandAni : MonoBehaviour
             Debug.LogWarning($"Sprite '{spriteName}' not found.");
         }
     }
+    */
 
     [YarnCommand]
     public void PlayAnimation(string animationName)
