@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextScroll : MonoBehaviour
 {
     [SerializeField] private RectTransform content, firstLine;
-    [SerializeField] TextMeshProUGUI lineText;
+    [SerializeField] private TextMeshProUGUI lineText, nameText;
     [SerializeField] private TextMeshProUGUI textLinePrefab;
     private List<TextMeshProUGUI> textLines = new();
     private float heightPerText;
@@ -24,7 +24,9 @@ public class TextScroll : MonoBehaviour
     public void AddLine()
     {
         textLines.Add(Instantiate(textLinePrefab, content));
-        textLines[textLines.Count - 1].text = lineText.text;
+
+        string sentence = GetText();
+        SetCurrentText(sentence);
 
         float totalTextHeight = heightPerText * (textIndex + 1);
 
@@ -37,6 +39,19 @@ public class TextScroll : MonoBehaviour
         }
 
         RepositionLines();
+    }
+
+    private string GetText()
+    {
+        if (string.IsNullOrEmpty(nameText.text))
+            return $"{lineText.text}";
+        else
+            return $"{nameText.text}: {lineText.text}";
+    }
+
+    private void SetCurrentText(string sentence)
+    {
+        textLines[textLines.Count - 1].text = sentence;
     }
 
     private void ScaleContent(float offset)
