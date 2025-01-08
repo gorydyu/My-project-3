@@ -15,4 +15,17 @@ Yeah waz up snoop
 Snoop: Top dogg buy them all nigga burn this shit up
 Snoop: D-P-G-C my nigga turn that shit up
 Snoop: CPT, LBC yeah we hookin' back up
+<<jump Test3>>
+===
+
+title: Test3
+tags:
+---
+dadadadadadadadada
+   -> 交通カード
+         <<jump Test2>>
+   -> お酒
+         <<jump Test2>>
+   -> カギ
+         <<jump Test2>>
 ===
