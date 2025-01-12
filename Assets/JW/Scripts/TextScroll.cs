@@ -1,19 +1,36 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TextScroll : MonoBehaviour
 {
-    [SerializeField] private RectTransform content, firstLine;
-    [SerializeField] private TextMeshProUGUI lineText, nameText;
-    [SerializeField] private TextMeshProUGUI textLinePrefab;
-    private List<TextMeshProUGUI> textLines = new();
-    private float heightPerText;
-    private int textIndex => textLines.Count - 1;
+    #region VARIABLE_EXPLAIN
+    /*
+        left: First index of current window (current view, which has the size of textLines.Count)
+        right: Last index of current window
+    */
+    #endregion
 
-    void Awake()
+    public enum RectCorner
     {
-        heightPerText = firstLine.rect.height;
+        BOTTOMLEFT,
+        TOPLEFT,
+        TOPRIGHT,
+        BOTTOMRIGHT
+    };
+
+    [SerializeField] private RectTransform content;
+    [SerializeField] private TextMeshProUGUI lineDisplay, nameDisplay, textLinePrefab;
+    private LinkedList<TextMeshProUGUI> textLines = new();
+    private List<string> textList = new();
+    private float heightPerText, viewBottomY, viewTopY;
+    private int left = 0, right = 0;
+    private int textIndex => textList.Count - 1;
+
+    void Start()
+    {
+        Init();
     }
 
     void OnEnable()
@@ -21,37 +38,61 @@ public class TextScroll : MonoBehaviour
         content.anchoredPosition = new Vector2();
     }
 
+    void Update()
+    {
+        WrapLines(Input.GetAxis("Mouse ScrollWheel"));
+    }
+
+    private void Init()
+    {
+        Transform firstLine = content.GetChild(0);
+
+        heightPerText = firstLine.GetComponent<RectTransform>().rect.height;
+        textLines.AddLast(firstLine.GetComponent<TextMeshProUGUI>());
+
+        int lineCount = (int)(content.rect.height / heightPerText) + 4;
+        float yPos = GetCornerY(content, RectCorner.BOTTOMLEFT) + heightPerText / 2f;
+
+        for (int i = 1; i < lineCount; i++)
+        {
+            TextMeshProUGUI line = Instantiate(textLinePrefab, content);
+            textLines.AddLast(line);
+            
+            line.transform.position = new Vector2(
+                firstLine.position.x,
+                yPos + heightPerText * i
+            );
+        }
+
+        viewBottomY = GetCornerY(content, RectCorner.BOTTOMLEFT);
+        viewTopY    = GetCornerY(content, RectCorner.TOPLEFT);
+
+        left = 0;
+        right = textLines.Count - 1;
+    }
+
     public void AddLine()
     {
-        textLines.Add(Instantiate(textLinePrefab, content));
+        AddText(lineDisplay.text);
 
-        string sentence = GetText();
-        SetCurrentText(sentence);
+        if (textList.Count > textLines.Count)
+        {
+            left++;
+            right++;
+        }
 
         float totalTextHeight = heightPerText * (textIndex + 1);
 
-        if (totalTextHeight > content.rect.height)
+        if (totalTextHeight >= content.rect.height)
         {
             float offset = totalTextHeight - content.rect.height;
 
             ScaleContent(offset);
             RepositionContent(offset);
+            RepositionLines(offset / 2);
         }
 
-        RepositionLines();
-    }
-
-    private string GetText()
-    {
-        if (string.IsNullOrEmpty(nameText.text))
-            return $"{lineText.text}";
-        else
-            return $"{nameText.text}: {lineText.text}";
-    }
-
-    private void SetCurrentText(string sentence)
-    {
-        textLines[textLines.Count - 1].text = sentence;
+        SetLines();
     }
 
     private void ScaleContent(float offset)
@@ -64,23 +105,81 @@ public class TextScroll : MonoBehaviour
         content.anchoredPosition = new Vector2(content.anchoredPosition.x, content.anchoredPosition.y + offset);
     }
 
-    private void RepositionLines()
+    private void RepositionLines(float offset)
     {
-        float yPos = GetFirstLineY(content) + heightPerText / 2f;
-
-        for (int i = textLines.Count - 1; i >= 0; i--)
+        foreach (var line in textLines)
         {
-            textLines[i].transform.position = new Vector2(
-                firstLine.position.x,
-                yPos + heightPerText * (textLines.Count - 1 - i)
+            line.transform.position = new Vector2(
+                line.transform.position.x,
+                line.transform.position.y - offset
             );
         }
     }
 
-    public float GetFirstLineY(RectTransform rect)
+    private void AddText(string lineText)
+    {
+        if (nameDisplay.gameObject.activeSelf)
+            textList.Add($"{nameDisplay.text}: {lineText}");
+        else
+            textList.Add($"{lineText}");
+    }
+
+    private void SetLines()
+    {
+        int i = Mathf.Min(right, textList.Count - 1);
+
+        foreach (var line in textLines)
+        {
+            if (i < left)
+                break;
+            
+            line.text = textList[i--];
+        }
+    }
+
+    public void WrapLines(float scroll)
+    {
+        if (scroll > 0 && left > 0 && textLines.Last.Value.transform.position.y - heightPerText / 2 <= viewTopY)
+        {
+            TextMeshProUGUI firstLine = textLines.First.Value;
+            textLines.RemoveFirst();
+
+            float lastLineYPos = textLines.Last.Value.transform.position.y;
+
+            firstLine.transform.position = new Vector2(
+                firstLine.transform.position.x,
+                lastLineYPos + heightPerText
+            );
+
+            textLines.AddLast(firstLine);
+            left--;
+            right--;
+        }
+
+        else if (scroll < 0 && right < textList.Count - 1 && textLines.First.Value.transform.position.y + heightPerText / 2 >= viewBottomY)
+        {
+            TextMeshProUGUI lastLine = textLines.Last.Value;
+            textLines.RemoveLast();
+
+            float firstLineYPos = textLines.First.Value.transform.position.y;
+
+            lastLine.transform.position = new Vector2(
+                lastLine.transform.position.x,
+                firstLineYPos - heightPerText
+            );
+
+            textLines.AddFirst(lastLine);
+            left++;
+            right++;
+        }
+        
+        SetLines();
+    }
+
+    public float GetCornerY(RectTransform rect, RectCorner type)
     {
         Vector3[] corners = new Vector3[4];
         rect.GetWorldCorners(corners);
-        return corners[0].y;
+        return corners[(int)type].y;
     }
 }
