@@ -26,6 +26,7 @@ public class TextScroll : MonoBehaviour
     private List<string> textList = new();
     private float heightPerText, viewBottomY, viewTopY;
     private int left = 0, right = 0;
+    private int currentScrollIndex = 0;
     private int textIndex => textList.Count - 1;
 
     void Start()
@@ -38,11 +39,6 @@ public class TextScroll : MonoBehaviour
         content.anchoredPosition = new Vector2();
     }
 
-    void Update()
-    {
-        WrapLines(Input.GetAxis("Mouse ScrollWheel"));
-    }
-
     private void Init()
     {
         Transform firstLine = content.GetChild(0);
@@ -51,7 +47,7 @@ public class TextScroll : MonoBehaviour
         textLines.AddLast(firstLine.GetComponent<TextMeshProUGUI>());
 
         int lineCount = (int)(content.rect.height / heightPerText) + 4;
-        float yPos = GetCornerY(content, RectCorner.BOTTOMLEFT) + heightPerText / 2f;
+        float yPos = GetCorner(content, RectCorner.BOTTOMLEFT).y + heightPerText / 2f;
 
         for (int i = 1; i < lineCount; i++)
         {
@@ -64,8 +60,8 @@ public class TextScroll : MonoBehaviour
             );
         }
 
-        viewBottomY = GetCornerY(content, RectCorner.BOTTOMLEFT);
-        viewTopY    = GetCornerY(content, RectCorner.TOPLEFT);
+        viewBottomY = GetCorner(content, RectCorner.BOTTOMLEFT).y;
+        viewTopY    = GetCorner(content, RectCorner.TOPLEFT).y;
 
         left = 0;
         right = textLines.Count - 1;
@@ -137,9 +133,9 @@ public class TextScroll : MonoBehaviour
         }
     }
 
-    public void WrapLines(float scroll)
+    private void WrapLines(bool scrollUp)
     {
-        if (scroll > 0 && left > 0 && textLines.Last.Value.transform.position.y - heightPerText / 2 <= viewTopY)
+        if (scrollUp && left > 0 && textLines.Last.Value.transform.position.y - heightPerText / 2 <= viewTopY)
         {
             TextMeshProUGUI firstLine = textLines.First.Value;
             textLines.RemoveFirst();
@@ -156,7 +152,7 @@ public class TextScroll : MonoBehaviour
             right--;
         }
 
-        else if (scroll < 0 && right < textList.Count - 1 && textLines.First.Value.transform.position.y + heightPerText / 2 >= viewBottomY)
+        else if (right < textList.Count - 1 && textLines.First.Value.transform.position.y + heightPerText / 2 >= viewBottomY)
         {
             TextMeshProUGUI lastLine = textLines.Last.Value;
             textLines.RemoveLast();
@@ -176,10 +172,22 @@ public class TextScroll : MonoBehaviour
         SetLines();
     }
 
-    public float GetCornerY(RectTransform rect, RectCorner type)
+    public void SetScrollIndex(float normPos)
+    {
+        int index = Mathf.CeilToInt(normPos * textList.Count);
+        index = Mathf.Clamp(index, 0, textList.Count - 1);
+
+        if (currentScrollIndex == index)
+            return;
+
+        WrapLines(currentScrollIndex < index);
+        currentScrollIndex = index;
+    }
+
+    public static Vector3 GetCorner(RectTransform rect, RectCorner type)
     {
         Vector3[] corners = new Vector3[4];
         rect.GetWorldCorners(corners);
-        return corners[(int)type].y;
+        return corners[(int)type];
     }
 }

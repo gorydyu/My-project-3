@@ -248,7 +248,19 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1752831890}
+        m_TargetAssemblyTypeName: TextScroll, Assembly-CSharp
+        m_MethodName: SetScrollIndex
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &302674573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,8 +944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c838b6ac0e32afd41be8593ef65f1753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  continueButton: {fileID: 1596099107}
   canvasGroup: {fileID: 7778558434940338007}
+  viewRect: {fileID: 1972104130}
+  continueButton: {fileID: 1596099107}
   onContinueEvent:
     m_PersistentCalls:
       m_Calls:
@@ -992,8 +1005,6 @@ MonoBehaviour:
   lineDisplay: {fileID: 7778558435099301096}
   nameDisplay: {fileID: 7778558436424223878}
   textLinePrefab: {fileID: 8301653641513335471, guid: e03329ecddfcc864182e2fa4f594bab9, type: 3}
-  left: 0
-  right: 0
 --- !u!1 &1828254141
 GameObject:
   m_ObjectHideFlags: 0
