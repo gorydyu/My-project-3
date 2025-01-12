@@ -115,7 +115,7 @@ public class TextScroll : MonoBehaviour
     private void AddText(string lineText)
     {
         if (nameDisplay.gameObject.activeSelf)
-            textList.Add($"{nameDisplay.text}: {lineText}");
+            textList.Add($"{nameDisplay.text}:\n{lineText}");
         else
             textList.Add($"{lineText}");
     }
