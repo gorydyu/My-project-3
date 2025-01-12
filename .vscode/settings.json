@@ -52,5 +52,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "My-project-3.sln"
+    "dotnet.defaultSolution": "My project (3).sln"
 }
